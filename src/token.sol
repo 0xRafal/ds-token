@@ -102,10 +102,11 @@ contract DSToken is DSMath, DSAuth {
         burn(msg.sender, wad);
     }
 
-    function mint(address guy, uint wad) public auth stoppable {
+    function mint(address guy, uint wad) public stoppable {
         balanceOf[guy] = add(balanceOf[guy], wad);
         totalSupply = add(totalSupply, wad);
         emit Mint(guy, wad);
+        emit Transfer(address(this), guy, wad);
     }
 
     function burn(address guy, uint wad) public auth stoppable {
@@ -130,7 +131,7 @@ contract DSToken is DSMath, DSAuth {
         emit Start();
     }
 
-    function setName(bytes32 name_) external auth {
+    function setName(bytes32 name_) public auth {
         name = name_;
     }
 }
